@@ -6,7 +6,7 @@ const social = [
   { href: "https://www.instagram.com/aficafe_ec", label: "Instagram", Icon: FaInstagram },
   {href:"https://www.youtube.com/@aficafe_ec", label: "YouTube", Icon: FaYoutube},
   { href: "https://www.tiktok.com/@aficafe_ec", label: "TikTok", Icon: FaTiktok },
-  { href: "mailto:aficafeec@gmail.com", label: "Email", Icon: FaEnvelope },
+  { href: "mailto:aficafe.ec@gmail.com", label: "Email", Icon: FaEnvelope },
 ];
 
 export default function Footer() {
