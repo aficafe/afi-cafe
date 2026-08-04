@@ -62,8 +62,9 @@ export default function AFISection() {
       </div>
 
       <p className="text-neutral-500 dark:text-white/60 text-sm mt-16 max-w-3xl mx-auto border-t border-neutral-200 dark:border-white/10 pt-6">
-        La presencia de la abeja en nuestra marca es una declaración de nuestro proceso de
-        polinización natural y sostenibilidad, no indica la adición de miel al producto.
+        Al cultivar nuestro café rodeado de cítricos y otros árboles frutales, enriquecemos de forma natural 
+        sus notas de aroma y sabor. Asimismo, la imagen de la abeja en nuestra identidad representa nuestro 
+        compromiso con la polinización natural y la sostenibilidad, sin implicar la adición de miel al producto.
       </p>
     </section>
   );

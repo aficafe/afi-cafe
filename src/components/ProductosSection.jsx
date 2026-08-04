@@ -9,21 +9,20 @@ const productos = [
   {
     nombre: "AFI Tueste Medio-Oscuro",
     descripcion: "100% Café Robusta Seleccionado.",
-    precio: "$8.50",
-    gramos:"500 g",
+    gramos: "500 g",
     imagen: "products/500.png",
   },
   {
     nombre: "AFI Tueste Oscuro",
     descripcion: "Intenso y robusto, ideal para espresso.",
-    precio: "$9.00",
-    imagen: "/products/oscuro.jpg",
+    gramos: "500 g",
+    imagen: "products/oscuro.jpg",
   },
   {
     nombre: "AFI Blend Especial",
     descripcion: "Mezcla de granos seleccionados en finca propia.",
-    precio: "$10.50",
-    imagen: "/products/blend.jpg",
+    gramos: "500 g",
+    imagen: "products/blend.jpg",
   },
 ];
 
@@ -79,7 +78,6 @@ export default function ProductosSection() {
               <p className="text-neutral-600 dark:text-white/60 text-sm mt-1">{p.descripcion}</p>
               <div className="flex justify-between items-center mt-4">
                 <span className="text-gold font-bold">{p.gramos}</span>
-                <span className="text-gold font-bold">{p.precio}</span>
                 <a
                   href={`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
                     `Hola, quiero pedir ${p.nombre}`
