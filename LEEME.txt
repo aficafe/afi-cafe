@@ -1,0 +1,95 @@
+AFI CAFÉ — proyecto React + Vite + Tailwind + Framer Motion
+==============================================================
+
+QUÉ SE CORRIGIÓ EN ESTA VERSIÓN
+--------------------------------
+1. Navbar.jsx estaba roto: tenía copiado por error el contenido de la
+   sección de Productos, con una etiqueta <a> incompleta que impedía que
+   el proyecto compilara. Ahora es una barra de navegación real, con
+   enlaces a cada sección y el botón de modo claro/oscuro.
+2. ProductosSection.jsx tenía la misma etiqueta <a> incompleta (le
+   faltaba el "<a" de apertura, solo estaban los atributos sueltos).
+   Esto también rompía la compilación. Ya está corregida.
+3. El botón "PEDIR" de cada producto apuntaba a un número de WhatsApp de
+   ejemplo ("TUNUMERO"). Ahora usa el mismo número que la sección de
+   Contacto (593960992712, formato internacional sin el 0 inicial).
+   Revisa que ese sea tu número correcto.
+4. Se agregó MODO OSCURO Y MODO CLARO:
+   - Botón con ícono de sol/luna en la barra de navegación (esquina
+     derecha, visible en escritorio y en el menú móvil).
+   - Recuerda la preferencia del usuario en el navegador (localStorage),
+     y si es su primera visita, respeta el modo oscuro/claro del sistema
+     operativo.
+   - Un script en index.html aplica el tema ANTES de pintar la página,
+     así se evita el parpadeo (flash) del color equivocado al cargar.
+   - Toda la paleta (fondos, textos, bordes) tiene una versión para modo
+     claro (fondo crema #F6F1E7) y otra para modo oscuro (negro #0a0a0a),
+     manteniendo el dorado (#D4AF37) y los colores A-F-I como acento en
+     ambos modos.
+
+PASOS PARA ARRANCAR (en tu computadora, con internet):
+
+1. Descomprime este zip donde quieras tener el proyecto.
+2. Abre una terminal dentro de la carpeta "afi-cafe".
+3. Instala las dependencias:
+
+   npm install
+
+4. Corre el proyecto en modo desarrollo:
+
+   npm run dev
+
+   Se abrirá algo como http://localhost:5173
+
+5. IMPORTANTE: faltan tus imágenes.
+   - La foto circular del logo: cópiala dentro de "public" con el
+     nombre public/afi.png (o cambia la ruta en src/components/Hero.jsx
+     si prefieres otro nombre).
+   - Las fotos de los productos: public/products/clasico.jpg,
+     public/products/oscuro.jpg y public/products/blend.jpg
+     (o cambia las rutas en src/components/ProductosSection.jsx).
+   Mientras no existan esas imágenes, el navegador solo mostrará un
+   ícono roto en su lugar; el resto de la página funciona igual.
+
+6. Cuando quieras publicarlo en GitHub Pages:
+
+   - Crea un repositorio en GitHub llamado, por ejemplo, "afi-cafe".
+   - En package.json, cambia la línea "homepage" por tu usuario real:
+       "homepage": "https://TU-USUARIO.github.io/afi-cafe"
+   - En vite.config.js, revisa que "base" diga: "/afi-cafe/"
+     (debe coincidir con el nombre de tu repositorio)
+   - Sube el proyecto a GitHub:
+       git init
+       git add .
+       git commit -m "Primera version AFI CAFE"
+       git branch -M main
+       git remote add origin https://github.com/TU-USUARIO/afi-cafe.git
+       git push -u origin main
+   - Instala gh-pages (ya está en package.json) y publica:
+       npm run deploy
+
+Estructura del proyecto:
+
+  afi-cafe/
+    index.html
+    package.json
+    vite.config.js
+    tailwind.config.js
+    postcss.config.js
+    public/              <- pon aquí tus imágenes (afi.png, products/*.jpg)
+    src/
+      main.jsx
+      App.jsx
+      index.css
+      ThemeContext.jsx    <- lógica del modo claro/oscuro
+      components/
+        Navbar.jsx        <- incluye el botón de modo claro/oscuro
+        Hero.jsx
+        HistoriaSection.jsx
+        AFISection.jsx
+        ProductosSection.jsx
+        ContactoSection.jsx
+        Footer.jsx
+
+Cualquier error que te salga en la terminal o en el navegador,
+mándamelo tal cual aparece y seguimos desde ahí.
