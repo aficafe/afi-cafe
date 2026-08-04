@@ -45,11 +45,11 @@ function HeroImage() {
   return (
     <div className="w-64 h-64 rounded-full border-2 border-gold overflow-hidden">
       <img
-        src="/afi.png"
-        alt="AFI CAFÉ"
-        onError={() => setBroken(true)}
-        className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-      />
+  src={`${import.meta.env.BASE_URL}afi.png`}
+  alt="AFI CAFÉ"
+  onError={() => setBroken(true)}
+  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+/>
     </div>
   );
 }
