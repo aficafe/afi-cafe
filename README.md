@@ -89,7 +89,6 @@ npm run build
 
 > Próximamente
 
-Aquí podrás agregar imágenes del catálogo.
 
 ---
 
