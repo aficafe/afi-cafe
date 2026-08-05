@@ -9,6 +9,7 @@ const links = [
   { to: "/historia", label: "Historia" },
   { to: "/afi", label: "AFI" },
   { to: "/productos", label: "Productos" },
+  { to: "/galeria", label: "Galeria" },
   { to: "/contacto", label: "Contacto" },
 ];
 
