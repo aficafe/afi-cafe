@@ -26,6 +26,22 @@ QUÉ SE CORRIGIÓ EN ESTA VERSIÓN
      claro (fondo crema #F6F1E7) y otra para modo oscuro (negro #0a0a0a),
      manteniendo el dorado (#D4AF37) y los colores A-F-I como acento en
      ambos modos.
+5. Se agregó la sección "Coffee Fest Ecuador 2026" (dentro de /historia,
+   justo después de Logros): fotos del evento, el ranking de la
+   categoría Robusta y 2 videos (cobertura completa sin editar + el
+   momento de la premiación). Mientras no subas tus archivos, se ve un
+   recuadro con "Foto próximamente" / "Video próximamente" — es
+   automático, no rompe nada.
+   - Fotos: colócalas en public/coffee-fest/ con los nombres foto1.jpeg,
+     foto2.jpeg, foto3.jpeg, foto4.jpeg (o cambia los nombres en
+     src/components/CoffeeFestSection.jsx). Puedes agregar más copiando
+     el patrón de la lista "fotosEvento".
+   - Videos: colócalos en public/videos/ con los nombres
+     coffee-fest-completo.mp4 (el de 10 minutos, sin editar) y
+     premiacion-1er-lugar.mp4 (el clip corto del momento del 1er lugar).
+     Si tus archivos pesan mucho, considera subirlos a YouTube/Drive sin
+     listar y avísame para cambiar el reproductor por un enlace en vez
+     de un archivo directo — así el sitio no se vuelve pesado de cargar.
 
 PASOS PARA ARRANCAR (en tu computadora, con internet):
 

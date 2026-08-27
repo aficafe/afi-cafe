@@ -7,6 +7,7 @@ import { useTheme } from "../ThemeContext.jsx";
 const links = [
   { to: "/", label: "Inicio" },
   { to: "/historia", label: "Historia" },
+  { to: "/proceso", label: "Proceso" },
   { to: "/afi", label: "AFI" },
   { to: "/productos", label: "Productos" },
   { to: "/galeria", label: "Galeria" },

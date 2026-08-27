@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Coffee } from "lucide-react";
 import { useState } from "react";
+import FlyingBee from "./FlyingBee";
 
 function AfiEmblem() {
   const r = 90;
@@ -61,7 +62,9 @@ export default function Hero() {
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
+        className="relative"
       >
+        <FlyingBee size={38} top="4%" left="-10%" range={70} duration={8} />
         <HeroImage />
       </motion.div>
 

@@ -1,3 +1,5 @@
 node_modules
 dist
 .DS_Store
+# Videos grandes
+public/videos/*.mp4

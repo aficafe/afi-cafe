@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
 
 const fotos = [
   { src: "./gallery/finca1.jpeg", texto: "Nuestra finca en Santo Domingo" },
@@ -26,78 +26,160 @@ const fotos = [
   { src: "./gallery/presentaciones2.jpeg", texto: "Disfrutando con AFI CAFÉ" },
 ];
 
-export default function GaleriaSection() {
-  const [index, setIndex] = useState(0);
+function Lightbox({ index, setIndex, onClose }) {
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
-  const next = () => setIndex((i) => (i + 1) % fotos.length);
-  const prev = () => setIndex((i) => (i - 1 + fotos.length) % fotos.length);
+  const next = useCallback(() => setIndex((i) => (i + 1) % fotos.length), [setIndex]);
+  const prev = useCallback(
+    () => setIndex((i) => (i - 1 + fotos.length) % fotos.length),
+    [setIndex]
+  );
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    };
+    window.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [next, prev, onClose]);
+
+  const onTouchStart = (e) => (touchStartX.current = e.touches[0].clientX);
+  const onTouchMove = (e) => (touchEndX.current = e.touches[0].clientX);
+  const onTouchEnd = () => {
+    const delta = touchStartX.current - touchEndX.current;
+    if (delta > 50) next();
+    else if (delta < -50) prev();
+  };
 
   return (
-    <section className="max-w-3xl mx-auto px-6 py-20">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      className="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4"
+      onClick={onClose}
+    >
+      <button
+        onClick={onClose}
+        aria-label="Cerrar"
+        className="absolute top-5 right-5 text-white/80 hover:text-gold transition-colors"
+      >
+        <X size={28} />
+      </button>
+
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          prev();
+        }}
+        aria-label="Anterior"
+        className="absolute left-3 md:left-8 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-gold hover:text-cafeBlack text-white rounded-full p-2.5 transition-colors"
+      >
+        <ChevronLeft size={22} />
+      </button>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          next();
+        }}
+        aria-label="Siguiente"
+        className="absolute right-3 md:right-8 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-gold hover:text-cafeBlack text-white rounded-full p-2.5 transition-colors"
+      >
+        <ChevronRight size={22} />
+      </button>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={fotos[index].src}
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.96 }}
+          transition={{ duration: 0.25 }}
+          className="max-w-4xl w-full max-h-[85vh] flex flex-col items-center"
+          onClick={(e) => e.stopPropagation()}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
+        >
+          <img
+            src={fotos[index].src}
+            alt={fotos[index].texto}
+            className="max-h-[72vh] w-auto max-w-full object-contain rounded-lg"
+          />
+          <p className="text-white/90 text-center text-sm md:text-base mt-4 px-4">
+            {fotos[index].texto}
+          </p>
+          <p className="text-gold/70 text-xs mt-1">
+            {index + 1} / {fotos.length}
+          </p>
+        </motion.div>
+      </AnimatePresence>
+    </motion.div>
+  );
+}
+
+export default function GaleriaSection() {
+  const [openIndex, setOpenIndex] = useState(null);
+
+  return (
+    <section className="max-w-5xl mx-auto px-6 py-20">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="mb-10"
+        className="mb-10 text-center"
       >
         <p className="text-gold text-sm tracking-widest mb-2">DE LA FINCA A LA TAZA</p>
         <h2 className="text-4xl font-bold text-neutral-900 dark:text-white">Galería</h2>
       </motion.div>
 
-      <div className="relative">
-        <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl border border-neutral-200 dark:border-white/10">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={fotos[index].src}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.4 }}
-              className="absolute inset-0"
-            >
-              <img
-                src={fotos[index].src}
-                alt={fotos[index].texto}
-                className="w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent flex items-end p-6">
-                <p className="text-white text-base md:text-lg font-medium">{fotos[index].texto}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* botones prev/next */}
-        <button
-          onClick={prev}
-          className="absolute left-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-gold hover:text-cafeBlack text-white rounded-full p-2 transition-colors"
-          aria-label="Anterior"
-        >
-          <ChevronLeft size={20} />
-        </button>
-        <button
-          onClick={next}
-          className="absolute right-3 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-gold hover:text-cafeBlack text-white rounded-full p-2 transition-colors"
-          aria-label="Siguiente"
-        >
-          <ChevronRight size={20} />
-        </button>
-      </div>
-
-      {/* puntos indicadores */}
-      <div className="flex justify-center gap-1.5 mt-4 flex-wrap">
-        {fotos.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setIndex(i)}
-            className={`w-2 h-2 rounded-full transition-colors ${
-              i === index ? "bg-gold" : "bg-neutral-300 dark:bg-white/20"
-            }`}
-            aria-label={`Ir a foto ${i + 1}`}
-          />
+      <div className="columns-2 sm:columns-3 md:columns-4 gap-4 [column-fill:_balance]">
+        {fotos.map((foto, i) => (
+          <motion.button
+            key={foto.src}
+            type="button"
+            onClick={() => setOpenIndex(i)}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{ duration: 0.4, delay: (i % 8) * 0.05 }}
+            className="group relative block w-full mb-4 break-inside-avoid overflow-hidden rounded-xl border border-neutral-200 dark:border-white/10 cursor-zoom-in"
+          >
+            <img
+              src={foto.src}
+              alt={foto.texto}
+              loading="lazy"
+              className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-3">
+              <p className="text-white text-xs md:text-sm font-medium text-left leading-snug">
+                {foto.texto}
+              </p>
+            </div>
+            <span className="absolute top-2 right-2 bg-black/50 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <Expand size={14} />
+            </span>
+          </motion.button>
         ))}
       </div>
+
+      <AnimatePresence>
+        {openIndex !== null && (
+          <Lightbox
+            index={openIndex}
+            setIndex={setOpenIndex}
+            onClose={() => setOpenIndex(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import SectionHeading from "./SectionHeading";
+import FlyingBee from "./FlyingBee";
 
 const letters = [
   {
@@ -50,8 +51,11 @@ export default function AFISection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: i * 0.15 }}
-            className="flex gap-6 items-start"
+            className="flex gap-6 items-start relative"
           >
+            {item.letter === "A" && (
+              <FlyingBee size={26} top="-15%" left="8%" range={35} duration={7} />
+            )}
             <span className={`text-6xl font-bold ${item.color} w-14 shrink-0`}>{item.letter}</span>
             <div>
               <p className={`text-sm font-semibold ${item.color} tracking-wide`}>{item.title}</p>

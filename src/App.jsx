@@ -2,6 +2,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "./ScrollToTop";
 import Home from "./pages/Home";
 import Historia from "./pages/Historia";
+import Proceso from "./pages/Proceso";
 import Afi from "./pages/Afi";
 import Productos from "./pages/Productos";
 import Galeria from "./pages/Galeria";
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/historia" element={<Historia />} />
+        <Route path="/proceso" element={<Proceso />} />
         <Route path="/afi" element={<Afi />} />
         <Route path="/productos" element={<Productos />} />
         <Route path="/galeria" element={<Galeria />} />

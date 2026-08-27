@@ -1,6 +1,12 @@
 import { motion } from "framer-motion";
-import { MessageCircle, Instagram, Mail } from "lucide-react";
+import { MessageCircle, Instagram, Mail, MapPin } from "lucide-react";
 import SectionHeading from "./SectionHeading";
+
+const CONTACTOS_WHATSAPP = [
+  { nombre: "Sr. Ángel Carvajal", numero: "593960992712" },
+  { nombre: "Sra. Rosario Carvajal", numero: "593963962848" },
+];
+const MENSAJE = "Hola, quiero saber más sobre AFI CAFÉ";
 
 export default function ContactoSection() {
   return (
@@ -18,15 +24,25 @@ export default function ContactoSection() {
         <p className="text-neutral-700 dark:text-white/70 mb-8 -mt-4">
           Escríbenos por WhatsApp o Instagram y te ayudamos con tu pedido.
         </p>
+
+        <p className="text-neutral-500 dark:text-white/50 text-xs uppercase tracking-widest mb-3">
+          Contáctanos por WhatsApp
+        </p>
+        <div className="flex justify-center gap-4 flex-wrap mb-4">
+          {CONTACTOS_WHATSAPP.map((c) => (
+            <a
+              key={c.numero}
+              href={`https://wa.me/${c.numero}?text=${encodeURIComponent(MENSAJE)}`}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center gap-2 border border-gold text-gold px-6 py-2 rounded-full hover:bg-gold hover:text-cafeBlack transition-colors"
+            >
+              <MessageCircle size={18} /> {c.nombre}
+            </a>
+          ))}
+        </div>
+
         <div className="flex justify-center gap-4 flex-wrap">
-          <a
-            href="https://wa.me/593960992712"
-            target="_blank"
-            rel="noreferrer"
-            className="flex items-center gap-2 border border-gold text-gold px-6 py-2 rounded-full hover:bg-gold hover:text-cafeBlack transition-colors"
-          >
-            <MessageCircle size={18} /> WhatsApp
-          </a>
           <a
             href="https://instagram.com/aficafe_ec"
             target="_blank"
@@ -42,6 +58,11 @@ export default function ContactoSection() {
             <Mail size={18} /> Email
           </a>
         </div>
+        <p className="text-neutral-500 dark:text-white/50 text-xs mt-8 flex items-center justify-center gap-1.5">
+          <MapPin size={14} className="text-gold shrink-0" />
+          Finca El Rosario, Km. 19 vía Valle Hermoso - Los Bancos, recinto Cristóbal Colón,
+          parroquia Valle Hermoso, Santo Domingo de los Tsáchilas, Ecuador
+        </p>
       </motion.div>
     </section>
   );

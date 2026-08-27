@@ -1,5 +1,7 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import WhatsAppFloat from "./WhatsAppFloat";
+import BackToTop from "./BackToTop";
 
 export default function Layout({ children }) {
   return (
@@ -9,6 +11,8 @@ export default function Layout({ children }) {
         <div className="flex-1">{children}</div>
         <Footer />
       </div>
+      <WhatsAppFloat />
+      <BackToTop />
     </div>
   );
 }

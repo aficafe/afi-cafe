@@ -6,14 +6,14 @@ export default {
     extend: {
       colors: {
         gold: "#D4AF37",
-        cafeBlack: "#0a0a0a",
         cream: "#F6F1E7",
-        afiA: "#DAA520",
-        afiF: "#6B8E23",
-        afiI: "#9E4235",
+        cafeBlack: "#0a0a0a",
+        afiA: "#F2B705",
+        afiF: "#4C7A3D",
+        afiI: "#6B4226",
       },
       fontFamily: {
-        display: ["'Poppins'", "sans-serif"],
+        sans: ["Poppins", "sans-serif"],
       },
     },
   },
