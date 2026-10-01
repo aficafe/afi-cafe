@@ -1,39 +1,61 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, X, Expand } from "lucide-react";
+import { fotosGlobalFair } from "../data/globalCoffeeFair";
+
+const FINCA = "Finca y cosecha";
+const PRESENT = "Presentaciones";
+const FEST = "Coffee Fest";
+const FERIA = "Global Coffee Fair";
+
+const conCat = (cat, lista) => lista.map((f) => ({ ...f, cat }));
 
 const fotos = [
-  { src: "./gallery/finca1.jpeg", texto: "Nuestra finca en Santo Domingo" },
-  { src: "./gallery/cultivo1.jpeg", texto: "El café creciendo en la planta" },
-  { src: "./gallery/cultivo2.jpeg", texto: "Cuidando cada rama con dedicación" },
-  { src: "./gallery/cultivo3.jpeg", texto: "Los granos madurando al sol" },
-  { src: "./gallery/cultivo4.jpeg", texto: "Cerca de estar listos para la cosecha" },
-  { src: "./gallery/cultivo5.jpeg", texto: "Frutos de café en su punto" },
-  { src: "./gallery/cultivo6.jpeg", texto: "Cultivo sostenible, paso a paso" },
-  { src: "./gallery/cosecha1.jpeg", texto: "El momento de la cosecha" },
-  { src: "./gallery/cosecha2.jpeg", texto: "Granos recién recolectados" },
-  { src: "./gallery/cosecha3.jpeg", texto: "Cada saco, resultado de mucho trabajo" },
-  { src: "./gallery/cultivo_proceso.jpeg", texto: "El proceso antes del tueste" },
-  { src: "./gallery/area_procesamiento.jpeg", texto: "Nuestra área de procesamiento" },
-  { src: "./gallery/finca2.jpeg", texto: "Un vistazo a nuestra tierra" },
-  { src: "./gallery/finca3.jpeg", texto: "Donde todo comienza" },
-  { src: "./gallery/exposicion.jpeg", texto: "Compartiendo AFI CAFÉ en persona" },
-  { src: "./gallery/exposicion1.jpeg", texto: "Nuestros productos, listos para probar" },
-  { src: "./gallery/exposicion2.jpeg", texto: "Presentando cada lote con cariño" },
-  { src: "./gallery/exposicion3.jpeg", texto: "AFI CAFÉ frente a frente contigo" },
-  { src: "./gallery/presentaciones.jpeg", texto: "Nuestra presentación final" },
-  { src: "./gallery/presentaciones1.jpeg", texto: "Cada detalle cuenta" },
-  { src: "./gallery/presentaciones2.jpeg", texto: "Disfrutando con AFI CAFÉ" },
+  ...conCat(FINCA, [
+    { src: "./gallery/finca1.jpeg", texto: "Nuestra finca en Santo Domingo" },
+    { src: "./gallery/cultivo1.jpeg", texto: "El café creciendo en la planta" },
+    { src: "./gallery/cultivo2.jpeg", texto: "Cuidando cada rama con dedicación" },
+    { src: "./gallery/cultivo3.jpeg", texto: "Los granos madurando al sol" },
+    { src: "./gallery/cultivo4.jpeg", texto: "Cerca de estar listos para la cosecha" },
+    { src: "./gallery/cultivo5.jpeg", texto: "Frutos de café en su punto" },
+    { src: "./gallery/cultivo6.jpeg", texto: "Cultivo sostenible, paso a paso" },
+    { src: "./gallery/cosecha1.jpeg", texto: "El momento de la cosecha" },
+    { src: "./gallery/cosecha2.jpeg", texto: "Granos recién recolectados" },
+    { src: "./gallery/cosecha3.jpeg", texto: "Cada saco, resultado de mucho trabajo" },
+    { src: "./gallery/cultivo_proceso.jpeg", texto: "El proceso antes del tueste" },
+    { src: "./gallery/area_procesamiento.jpeg", texto: "Nuestra área de procesamiento" },
+    { src: "./gallery/finca2.jpeg", texto: "Un vistazo a nuestra tierra" },
+    { src: "./gallery/finca3.jpeg", texto: "Donde todo comienza" },
+  ]),
+  ...conCat(PRESENT, [
+    { src: "./gallery/exposicion.jpeg", texto: "Compartiendo AFI CAFÉ en persona" },
+    { src: "./gallery/exposicion1.jpeg", texto: "Nuestros productos, listos para probar" },
+    { src: "./gallery/exposicion2.jpeg", texto: "Presentando cada lote con cariño" },
+    { src: "./gallery/exposicion3.jpeg", texto: "AFI CAFÉ frente a frente contigo" },
+    { src: "./gallery/presentaciones.jpeg", texto: "Nuestra presentación final" },
+    { src: "./gallery/presentaciones1.jpeg", texto: "Cada detalle cuenta" },
+    { src: "./gallery/presentaciones2.jpeg", texto: "Disfrutando con AFI CAFÉ" },
+  ]),
+  ...conCat(FEST, [
+    { src: "./coffee-fest/foto1.jpg", texto: "Stand de AFI CAFÉ en el Coffee Fest Ecuador 2026" },
+    { src: "./coffee-fest/foto2.jpg", texto: "Momento de la catación" },
+    { src: "./coffee-fest/foto3.jpg", texto: "Recibiendo el reconocimiento" },
+    { src: "./coffee-fest/foto4.jpg", texto: "Con el equipo AFI CAFÉ" },
+  ]),
+  // Las 15 fotos de The Global Coffee Fair vienen de data/globalCoffeeFair.js
+  ...conCat(FERIA, fotosGlobalFair),
 ];
 
-function Lightbox({ index, setIndex, onClose }) {
+const categorias = ["Todas", FINCA, PRESENT, FEST, FERIA];
+
+function Lightbox({ fotos, index, setIndex, onClose }) {
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
 
-  const next = useCallback(() => setIndex((i) => (i + 1) % fotos.length), [setIndex]);
+  const next = useCallback(() => setIndex((i) => (i + 1) % fotos.length), [setIndex, fotos.length]);
   const prev = useCallback(
     () => setIndex((i) => (i - 1 + fotos.length) % fotos.length),
-    [setIndex]
+    [setIndex, fotos.length]
   );
 
   useEffect(() => {
@@ -127,6 +149,9 @@ function Lightbox({ index, setIndex, onClose }) {
 
 export default function GaleriaSection() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [cat, setCat] = useState("Todas");
+  const lista = cat === "Todas" ? fotos : fotos.filter((f) => f.cat === cat);
+  const cuenta = (c) => (c === "Todas" ? fotos.length : fotos.filter((f) => f.cat === c).length);
 
   return (
     <section className="max-w-5xl mx-auto px-6 py-20">
@@ -135,14 +160,35 @@ export default function GaleriaSection() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="mb-10 text-center"
+        className="mb-8 text-center"
       >
-        <p className="text-gold text-sm tracking-widest mb-2">DE LA FINCA A LA TAZA</p>
+        <p className="text-goldDeep dark:text-gold text-sm tracking-widest mb-2">DE LA FINCA A LA TAZA</p>
         <h2 className="text-4xl font-bold text-neutral-900 dark:text-white">Galería</h2>
       </motion.div>
 
+      <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {categorias.map((c) => {
+          const activo = c === cat;
+          return (
+            <button
+              key={c}
+              type="button"
+              aria-pressed={activo}
+              onClick={() => setCat(c)}
+              className={`text-sm px-4 py-1.5 rounded-full border transition-colors ${
+                activo
+                  ? "bg-gold border-gold text-cafeBlack font-semibold"
+                  : "border-gold/40 text-neutral-700 dark:text-white/70 hover:border-gold"
+              }`}
+            >
+              {c} <span className="opacity-60 text-xs">({cuenta(c)})</span>
+            </button>
+          );
+        })}
+      </div>
+
       <div className="columns-2 sm:columns-3 md:columns-4 gap-4 [column-fill:_balance]">
-        {fotos.map((foto, i) => (
+        {lista.map((foto, i) => (
           <motion.button
             key={foto.src}
             type="button"
@@ -174,6 +220,7 @@ export default function GaleriaSection() {
       <AnimatePresence>
         {openIndex !== null && (
           <Lightbox
+            fotos={lista}
             index={openIndex}
             setIndex={setOpenIndex}
             onClose={() => setOpenIndex(null)}

@@ -1,13 +1,16 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { CalendarDays, Home as HomeIcon } from "lucide-react";
 import SectionHeading from "./SectionHeading";
 
 const novedades = [
   {
     icon: CalendarDays,
-    tag: "18–20 SEPT · QUITO",
+    tag: "18–20 SEPT · QUITO · ¡YA FUIMOS!",
     title: "The Global Coffee Fair",
-    text: "Gracias a la invitación del GAD Parroquial de Santo Domingo, estaremos presentes en The Global Coffee Fair, en el Centro de Convenciones Metropolitano de Quito (Parque Bicentenario) — la feria de café más importante del país, con más de 150 marcas, catas sensoriales y el Concurso Nacional de Barismo.",
+    text: "Gracias a la invitación del GAD Parroquial de Valle Hermoso, estuvimos presentes en The Global Coffee Fair, en el Centro de Convenciones Metropolitano de Quito (Parque Bicentenario). Nuestra muestra fue evaluada por Guayasamín – Specialty Coffee Lab y obtuvo 83.50 puntos SCA.",
+    to: "/feria",
+    cta: "Ver fotos y videos de la feria →",
   },
   {
     icon: HomeIcon,
@@ -27,7 +30,7 @@ export default function NovedadesSection() {
         transition={{ duration: 0.6 }}
         className="max-w-3xl mx-auto"
       >
-        <SectionHeading eyebrow="AGENDA" title="Lo que viene para AFI CAFÉ" />
+        <SectionHeading eyebrow="NOVEDADES" title="Lo último de AFI CAFÉ" />
       </motion.div>
 
       <div className="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
@@ -48,6 +51,14 @@ export default function NovedadesSection() {
             <p className="text-neutral-600 dark:text-white/60 text-sm mt-2 leading-relaxed">
               {n.text}
             </p>
+            {n.to && (
+              <Link
+                to={n.to}
+                className="inline-block mt-3 text-gold text-sm font-semibold hover:underline"
+              >
+                {n.cta}
+              </Link>
+            )}
           </motion.div>
         ))}
       </div>

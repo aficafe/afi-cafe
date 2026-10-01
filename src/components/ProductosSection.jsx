@@ -6,13 +6,9 @@ import SectionHeading from "./SectionHeading";
 const WHATSAPP_NUMERO = "593960992712"; // mismo número que en la sección de contacto
 const IMG_500 = `${import.meta.env.BASE_URL}products/500.png`;
 
-// Presentaciones de venta regular (a partir de 250 g)
-const CONTENIDOS_COMPRA = [250, 300, 350, 400, 500, 600, 700, 800, 900, 1000, 2000];
-// Presentaciones mini, pensadas para que el cliente pruebe antes de comprar más
-const CONTENIDOS_PRUEBA = [15, 30, 60, 90, 100, 120, 150, 200];
-const CONTENIDO_DEFECTO = 500;
-
-const formatContenido = (g) => (g >= 1000 ? `${g / 1000} kg` : `${g} g`);
+// Presentaciones que se venden (las mismas para todos los productos)
+const PRESENTACIONES = ["50 g", "250 g", "400 g", "500 g", "1 libra", "1 kilo"];
+const PRESENTACION_DEFECTO = "500 g";
 
 const lineas = [
   {
@@ -77,14 +73,7 @@ function ProductImage({ src, alt }) {
 }
 
 function ProductCard({ p, i }) {
-  const [modo, setModo] = useState("compra"); // "compra" | "prueba"
-  const [contenidoCompra, setContenidoCompra] = useState(CONTENIDO_DEFECTO);
-  const [contenidoPrueba, setContenidoPrueba] = useState(CONTENIDOS_PRUEBA[0]);
-
-  const esCompra = modo === "compra";
-  const opciones = esCompra ? CONTENIDOS_COMPRA : CONTENIDOS_PRUEBA;
-  const contenido = esCompra ? contenidoCompra : contenidoPrueba;
-  const setContenido = esCompra ? setContenidoCompra : setContenidoPrueba;
+  const [presentacion, setPresentacion] = useState(PRESENTACION_DEFECTO);
 
   return (
     <motion.div
@@ -101,69 +90,40 @@ function ProductCard({ p, i }) {
         <h4 className="text-neutral-900 dark:text-white font-semibold text-base">{p.nombre}</h4>
         <p className="text-neutral-600 dark:text-white/60 text-sm mt-1">{p.descripcion}</p>
 
-        {/* Selector Comprar / Probar */}
-        <div className="mt-4 grid grid-cols-2 gap-1.5 p-1 rounded-lg bg-neutral-100 dark:bg-white/5">
-          <button
-            type="button"
-            onClick={() => setModo("compra")}
-            className={`text-xs font-semibold py-1.5 rounded-md transition-colors ${
-              esCompra
-                ? "bg-gold text-cafeBlack"
-                : "text-neutral-500 dark:text-white/50 hover:text-neutral-800 dark:hover:text-white"
-            }`}
-          >
-            Comprar
-          </button>
-          <button
-            type="button"
-            onClick={() => setModo("prueba")}
-            className={`text-xs font-semibold py-1.5 rounded-md transition-colors ${
-              !esCompra
-                ? "bg-gold text-cafeBlack"
-                : "text-neutral-500 dark:text-white/50 hover:text-neutral-800 dark:hover:text-white"
-            }`}
-          >
-            Probar
-          </button>
-        </div>
-
-        <div className="mt-3">
-          <label className="block text-neutral-500 dark:text-white/50 text-[11px] uppercase tracking-wide mb-1.5">
-            {esCompra ? "Contenido" : "Tamaño de prueba"}
-          </label>
-          <select
-            value={contenido}
-            onChange={(e) => setContenido(Number(e.target.value))}
-            className="w-full text-sm bg-neutral-50 dark:bg-white/5 border border-neutral-200 dark:border-white/15 text-neutral-800 dark:text-white rounded-lg px-3 py-2 focus:outline-none focus:border-gold cursor-pointer"
-            style={{ colorScheme: "light" }}
-          >
-            {opciones.map((g) => (
-              <option
-                key={g}
-                value={g}
-                style={{ color: "#1a1a1a", backgroundColor: "#ffffff" }}
-              >
-                {formatContenido(g)}
-              </option>
-            ))}
-          </select>
-          {!esCompra && (
-            <p className="text-neutral-400 dark:text-white/40 text-[11px] mt-1.5 leading-snug">
-              Presentación mini para que pruebes antes de tu próximo pedido.
-            </p>
-          )}
+        <div className="mt-4">
+          <p className="text-neutral-600 dark:text-white/50 text-[11px] uppercase tracking-wide mb-2">
+            Presentación
+          </p>
+          <div className="grid grid-cols-3 gap-1.5">
+            {PRESENTACIONES.map((op) => {
+              const activo = op === presentacion;
+              return (
+                <button
+                  key={op}
+                  type="button"
+                  aria-pressed={activo}
+                  onClick={() => setPresentacion(op)}
+                  className={`text-xs py-1.5 rounded-md border transition-colors ${
+                    activo
+                      ? "bg-gold border-gold text-cafeBlack font-semibold"
+                      : "border-neutral-200 dark:border-white/15 text-neutral-700 dark:text-white/60 hover:border-gold"
+                  }`}
+                >
+                  {op}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         <div className="flex justify-center mt-4">
           <a
             href={`https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
-              `Hola, quiero pedir AFI Café - ${p.nombre} (${formatContenido(contenido)}${
-                !esCompra ? " · presentación de prueba" : ""
-              })`
+              `Hola, quiero pedir AFI Café - ${p.nombre} (${presentacion})`
             )}`}
             target="_blank"
             rel="noreferrer"
-            className="w-full text-center text-xs font-semibold border border-gold text-gold px-3 py-2 rounded-full hover:bg-gold hover:text-cafeBlack transition-colors"
+            className="w-full text-center text-xs font-semibold border border-gold text-goldDeep dark:text-gold px-3 py-2 rounded-full hover:bg-gold hover:text-cafeBlack transition-colors"
           >
             PEDIR POR WHATSAPP
           </a>
@@ -185,8 +145,8 @@ export default function ProductosSection() {
       >
         <SectionHeading eyebrow="NUESTRA SELECCIÓN" title="Productos" />
         <p className="text-neutral-600 dark:text-white/60 -mt-6 mb-10">
-          Café Robusta 100%, tueste medio-oscuro. Presentaciones de venta desde 250 g hasta
-          2 kg, y tamaños mini desde 15 g para que pruebes antes de tu próximo pedido.
+          Café Robusta 100%, tueste medio-oscuro. Lo encuentras en presentaciones de 50 g,
+          250 g, 400 g, 500 g, 1 libra y 1 kilo.
         </p>
       </motion.div>
 

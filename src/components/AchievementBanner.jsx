@@ -12,7 +12,7 @@ export default function AchievementBanner() {
         transition={{ duration: 0.6 }}
       >
         <Link
-          to="/historia"
+          to="/eventos"
           className="group flex flex-col sm:flex-row items-center gap-4 sm:gap-6 rounded-2xl border border-gold/40 bg-gold/5 dark:bg-gold/[0.06] px-6 py-5 max-w-3xl mx-auto hover:bg-gold/10 dark:hover:bg-gold/10 transition-colors"
         >
           <span className="shrink-0 w-12 h-12 rounded-full bg-gold/15 border border-gold/40 flex items-center justify-center">
@@ -28,7 +28,7 @@ export default function AchievementBanner() {
             </p>
           </div>
           <span className="hidden sm:block text-gold text-sm shrink-0 ml-auto group-hover:translate-x-1 transition-transform">
-            Conoce la historia →
+            Ver el reconocimiento →
           </span>
         </Link>
       </motion.div>

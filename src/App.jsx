@@ -7,6 +7,8 @@ import Afi from "./pages/Afi";
 import Productos from "./pages/Productos";
 import Galeria from "./pages/Galeria";
 import Contacto from "./pages/Contacto";
+import Feria from "./pages/Feria";
+import Eventos from "./pages/Eventos";
 
 export default function App() {
   return (
@@ -20,6 +22,8 @@ export default function App() {
         <Route path="/productos" element={<Productos />} />
         <Route path="/galeria" element={<Galeria />} />
         <Route path="/contacto" element={<Contacto />} />
+        <Route path="/eventos" element={<Eventos />} />
+        <Route path="/feria" element={<Feria />} />
         <Route path="*" element={<Home />} />
       </Routes>
     </HashRouter>

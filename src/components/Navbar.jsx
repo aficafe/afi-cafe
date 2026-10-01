@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "../ThemeContext.jsx";
+import AfiCafeLogo from "./AfiCafeLogo.jsx";
 
 const links = [
   { to: "/", label: "Inicio" },
   { to: "/historia", label: "Historia" },
+  { to: "/eventos", label: "Eventos" },
   { to: "/proceso", label: "Proceso" },
   { to: "/afi", label: "AFI" },
   { to: "/productos", label: "Productos" },
@@ -42,14 +44,11 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 backdrop-blur bg-cream/80 dark:bg-cafeBlack/80 border-b border-gold/20">
       <div className="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
-        <NavLink to="/" className="text-lg font-bold tracking-wide">
-          <span className="text-afiA">A</span>
-          <span className="text-afiF">F</span>
-          <span className="text-afiI">I</span>
-          <span className="text-neutral-900 dark:text-white"> CAFÉ</span>
+        <NavLink to="/">
+          <AfiCafeLogo size="h-9" />
         </NavLink>
 
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden md:flex items-center gap-5 lg:gap-8">
           {links.map((link) => (
             <NavLink key={link.to} to={link.to} end={link.to === "/"} className={linkClass}>
               {link.label}

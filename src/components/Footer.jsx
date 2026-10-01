@@ -3,6 +3,8 @@ import { FaFacebookF, FaInstagram, FaTiktok, FaEnvelope, FaYoutube } from "react
 import { MessageCircle } from "lucide-react";
 import FlyingBee from "./FlyingBee";
 import HoneycombPattern from "./HoneycombPattern";
+import AfiCafeLogo from "./AfiCafeLogo";
+
 
 const social = [
   { href: "https://www.facebook.com/aficafe", label: "Facebook", Icon: FaFacebookF },
@@ -19,6 +21,7 @@ const contactosWhatsApp = [
 
 const quickLinks = [
   { to: "/historia", label: "Historia" },
+  { to: "/eventos", label: "Eventos y reconocimientos" },
   { to: "/proceso", label: "Proceso" },
   { to: "/afi", label: "¿Qué es AFI?" },
   { to: "/productos", label: "Productos" },
@@ -36,12 +39,9 @@ export default function Footer() {
         <div className="grid gap-10 sm:grid-cols-3 text-center sm:text-left">
           {/* Marca */}
           <div>
-            <p className="text-2xl font-bold tracking-wide">
-              <span className="text-afiA">A</span>
-              <span className="text-afiF">F</span>
-              <span className="text-afiI">I</span>
-              <span className="text-neutral-900 dark:text-white"> CAFÉ</span>
-            </p>
+            <Link to="/" aria-label="AFI CAFÉ, ir al inicio" className="inline-block">
+              <AfiCafeLogo size="h-10" />
+            </Link>
             <p className="text-neutral-600 dark:text-white/60 text-sm mt-2 max-w-[220px] mx-auto sm:mx-0">
               Pasión por el café, respeto por la vida. Santo Domingo, Ecuador.
             </p>

@@ -1,111 +1,30 @@
-AFI CAFÉ — proyecto React + Vite + Tailwind + Framer Motion
-==============================================================
+CÓMO INSTALAR
+=============
+Copia las carpetas src/ y public/ de este zip encima de tu proyecto (acepta reemplazar).
 
-QUÉ SE CORRIGIÓ EN ESTA VERSIÓN
---------------------------------
-1. Navbar.jsx estaba roto: tenía copiado por error el contenido de la
-   sección de Productos, con una etiqueta <a> incompleta que impedía que
-   el proyecto compilara. Ahora es una barra de navegación real, con
-   enlaces a cada sección y el botón de modo claro/oscuro.
-2. ProductosSection.jsx tenía la misma etiqueta <a> incompleta (le
-   faltaba el "<a" de apertura, solo estaban los atributos sueltos).
-   Esto también rompía la compilación. Ya está corregida.
-3. El botón "PEDIR" de cada producto apuntaba a un número de WhatsApp de
-   ejemplo ("TUNUMERO"). Ahora usa el mismo número que la sección de
-   Contacto (593960992712, formato internacional sin el 0 inicial).
-   Revisa que ese sea tu número correcto.
-4. Se agregó MODO OSCURO Y MODO CLARO:
-   - Botón con ícono de sol/luna en la barra de navegación (esquina
-     derecha, visible en escritorio y en el menú móvil).
-   - Recuerda la preferencia del usuario en el navegador (localStorage),
-     y si es su primera visita, respeta el modo oscuro/claro del sistema
-     operativo.
-   - Un script en index.html aplica el tema ANTES de pintar la página,
-     así se evita el parpadeo (flash) del color equivocado al cargar.
-   - Toda la paleta (fondos, textos, bordes) tiene una versión para modo
-     claro (fondo crema #F6F1E7) y otra para modo oscuro (negro #0a0a0a),
-     manteniendo el dorado (#D4AF37) y los colores A-F-I como acento en
-     ambos modos.
-5. Se agregó la sección "Coffee Fest Ecuador 2026" (dentro de /historia,
-   justo después de Logros): fotos del evento, el ranking de la
-   categoría Robusta y 2 videos (cobertura completa sin editar + el
-   momento de la premiación). Mientras no subas tus archivos, se ve un
-   recuadro con "Foto próximamente" / "Video próximamente" — es
-   automático, no rompe nada.
-   - Fotos: colócalas en public/coffee-fest/ con los nombres foto1.jpeg,
-     foto2.jpeg, foto3.jpeg, foto4.jpeg (o cambia los nombres en
-     src/components/CoffeeFestSection.jsx). Puedes agregar más copiando
-     el patrón de la lista "fotosEvento".
-   - Videos: colócalos en public/videos/ con los nombres
-     coffee-fest-completo.mp4 (el de 10 minutos, sin editar) y
-     premiacion-1er-lugar.mp4 (el clip corto del momento del 1er lugar).
-     Si tus archivos pesan mucho, considera subirlos a YouTube/Drive sin
-     listar y avísame para cambiar el reproductor por un enlace en vez
-     de un archivo directo — así el sitio no se vuelve pesado de cargar.
+LANDING NUEVA:  /#/feria   (en local: http://localhost:5174/afi-cafe/#/feria)
+  1. Hero: The Global Coffee Fair + 2 videos de TikTok
+  2. Carrusel infinito de 15 fotos con lightbox
+  3. Comunidad Instagram (post DdiClQngAqO)
+  4. Comprar Café + Instagram (post DdAXeF_AhzY)
 
-PASOS PARA ARRANCAR (en tu computadora, con internet):
+NUEVOS
+  src/pages/Feria.jsx
+  src/components/FeriaHero.jsx, FeriaCarousel.jsx, ComunidadInstagram.jsx, ComprarCafeSection.jsx
+  src/components/SocialEmbeds.jsx, GlobalCoffeeFairSection.jsx
+  src/data/globalCoffeeFair.js       (fotos, enlaces y textos: aquí editas)
+  public/analisis-sensorial-global-coffee-fair.pdf
 
-1. Descomprime este zip donde quieras tener el proyecto.
-2. Abre una terminal dentro de la carpeta "afi-cafe".
-3. Instala las dependencias:
+MODIFICADOS
+  src/App.jsx                        ruta /feria
+  src/pages/Historia.jsx
+  src/components/GaleriaSection.jsx
+  src/components/NovedadesSection.jsx   el botón lleva a /feria
 
-   npm install
+FOTOS: copia las 15 a src/assets/global-coffee-fair/ (foto01.jpg ... foto15.jpg).
+Se ordenan por nombre. Salen solas en el carrusel y en la Galería.
 
-4. Corre el proyecto en modo desarrollo:
-
-   npm run dev
-
-   Se abrirá algo como http://localhost:5173
-
-5. IMPORTANTE: faltan tus imágenes.
-   - La foto circular del logo: cópiala dentro de "public" con el
-     nombre public/afi.png (o cambia la ruta en src/components/Hero.jsx
-     si prefieres otro nombre).
-   - Las fotos de los productos: public/products/clasico.jpg,
-     public/products/oscuro.jpg y public/products/blend.jpg
-     (o cambia las rutas en src/components/ProductosSection.jsx).
-   Mientras no existan esas imágenes, el navegador solo mostrará un
-   ícono roto en su lugar; el resto de la página funciona igual.
-
-6. Cuando quieras publicarlo en GitHub Pages:
-
-   - Crea un repositorio en GitHub llamado, por ejemplo, "afi-cafe".
-   - En package.json, cambia la línea "homepage" por tu usuario real:
-       "homepage": "https://TU-USUARIO.github.io/afi-cafe"
-   - En vite.config.js, revisa que "base" diga: "/afi-cafe/"
-     (debe coincidir con el nombre de tu repositorio)
-   - Sube el proyecto a GitHub:
-       git init
-       git add .
-       git commit -m "Primera version AFI CAFE"
-       git branch -M main
-       git remote add origin https://github.com/TU-USUARIO/afi-cafe.git
-       git push -u origin main
-   - Instala gh-pages (ya está en package.json) y publica:
-       npm run deploy
-
-Estructura del proyecto:
-
-  afi-cafe/
-    index.html
-    package.json
-    vite.config.js
-    tailwind.config.js
-    postcss.config.js
-    public/              <- pon aquí tus imágenes (afi.png, products/*.jpg)
-    src/
-      main.jsx
-      App.jsx
-      index.css
-      ThemeContext.jsx    <- lógica del modo claro/oscuro
-      components/
-        Navbar.jsx        <- incluye el botón de modo claro/oscuro
-        Hero.jsx
-        HistoriaSection.jsx
-        AFISection.jsx
-        ProductosSection.jsx
-        ContactoSection.jsx
-        Footer.jsx
-
-Cualquier error que te salga en la terminal o en el navegador,
-mándamelo tal cual aparece y seguimos desde ahí.
+TIPOGRAFÍA (opcional): en index.html, dentro de <head>, agrega:
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+Sin esto, los títulos usan Georgia y se ven bien igual.

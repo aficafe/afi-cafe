@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Trophy, MapPin, Calendar, Camera, PlayCircle } from "lucide-react";
-import SectionHeading from "./SectionHeading";
+import { Trophy, Camera, PlayCircle } from "lucide-react";
+import EventoHeader from "./EventoHeader";
+import { LogroCard } from "./LogrosSection";
 
 // Coloca aquí tus fotos del evento (ver /public/coffee-fest en el proyecto)
 const fotosEvento = [
@@ -80,29 +81,31 @@ function EventVideo({ src, titulo, descripcion }) {
 
 export default function CoffeeFestSection() {
   return (
-    <section id="coffee-fest" className="max-w-5xl mx-auto px-6 py-20">
+    <section id="coffee-fest" className="max-w-5xl mx-auto px-6 py-20 scroll-mt-24">
+      <EventoHeader
+        eyebrow="EVENTO Y RECONOCIMIENTO · SANTO DOMINGO"
+        titulo="Coffee Fest Ecuador 2026"
+        dia="21–22"
+        mes="AGO 2026"
+        fechaLarga="21 y 22 de agosto de 2026"
+        lugar="Coliseo del Centro Agrícola Cantonal, Santo Domingo"
+      >
+        <p>
+          El Coffee Fest Ecuador 2026, celebrado por primera vez, reunió a productores de Santo
+          Domingo y sectores cercanos para mostrar la calidad de sus cosechas, con catas,
+          exhibiciones de baristas y espacios para fortalecer la cultura cafetera de la región.
+        </p>
+      </EventoHeader>
+
+      {/* Reconocimiento obtenido en este evento */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto"
+        className="max-w-3xl mx-auto mb-14"
       >
-        <SectionHeading eyebrow="COFFEE FEST ECUADOR 2026" title="Así AFI CAFÉ se dejo ver en el festival" />
-        <p className="text-neutral-700 dark:text-white/70 -mt-6 mb-4 leading-relaxed">
-          El Coffee Fest Ecuador 2026 celebrado por 1era vez reunió a productores de Santo Domingo y sectores cercanos
-          para mostrar la calidad de sus cosechas, con catas, exhibiciones de baristas y
-          espacios para fortalecer la cultura cafetera de la región.
-        </p>
-        <div className="flex flex-wrap gap-x-6 gap-y-2 text-sm text-neutral-500 dark:text-white/50 mb-10">
-          <span className="flex items-center gap-1.5">
-            <Calendar size={15} className="text-gold" /> 21 y 22 de agosto de 2026
-          </span>
-          <span className="flex items-center gap-1.5">
-            <MapPin size={15} className="text-gold" /> Coliseo del Centro Agrícola Cantonal,
-            Santo Domingo
-          </span>
-        </div>
+        <LogroCard />
       </motion.div>
 
       {/* Ranking de la categoría */}
